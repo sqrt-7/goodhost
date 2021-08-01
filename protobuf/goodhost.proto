@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package goodhost;
+
+option go_package = "github.com/sqrt-7/goodhost/protobuf/goodhost";
+
+message Item {
+    string id = 1;
+    string description_md = 2;
+    // Price to be set as <currency, value_in_cents>
+    map<string, uint32> price = 3;
+}
