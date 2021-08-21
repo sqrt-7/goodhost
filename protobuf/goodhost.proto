@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package goodhost;
 
-option go_package = "github.com/sqrt-7/goodhost/protobuf/goodhost";
+option go_package = "github.com/sqrt-7/goodhost/pkg/autogen";
 
 message Item {
     string id = 1;
