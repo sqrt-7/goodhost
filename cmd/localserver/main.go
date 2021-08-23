@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	stuff := &autogen.Item{}
+	stuff := &autogen.MenuItem{}
 	stuff.Id = "blah123"
 
 	fmt.Println("ID:", stuff.Id)

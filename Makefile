@@ -3,15 +3,16 @@ PACKAGE_ROOT=github.com/sqrt-7/goodhost
 GO_VERSION_LOCK_PROTOBUF=latest
 GO_VERSION_LOCK_GRPC_GW=v1.16.0
 PROTOC_VERSION=3.17.3
+PROTOC_ARCH=osx-x86_64
 
 PROTOC_INCLUDES= -I. \
 	-I${GOPATH}/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
 	-I${GOPATH}/src/github.com/grpc-ecosystem/grpc-gateway
 
 install-protoc:
-	curl -LO https://github.com/protocolbuffers/protobuf/releases/download/v${PROTOC_VERSION}/protoc-${PROTOC_VERSION}-osx-x86_64.zip
-	unzip protoc-${PROTOC_VERSION}-osx-x86_64.zip -d ${HOME}/.local
-	rm -rf protoc-${PROTOC_VERSION}-osx-x86_64.zip
+	curl -LO https://github.com/protocolbuffers/protobuf/releases/download/v${PROTOC_VERSION}/protoc-${PROTOC_VERSION}-${PROTOC_ARCH}.zip
+	unzip protoc-${PROTOC_VERSION}-${PROTOC_ARCH}.zip -d ${HOME}/.local
+	rm -rf protoc-${PROTOC_VERSION}-${PROTOC_ARCH}.zip
 
 install-deps-go:
 	cd $(shell mktemp -d) && \
@@ -37,6 +38,5 @@ autogen-go:
 	rm -rf $(shell echo ${PACKAGE_ROOT} | tr "/" "\n" | head -n 1)
 
 run-localserver:
-	rm -rf bin
 	go build -o ./bin/localserver ./cmd/localserver/main.go
 	./bin/localserver

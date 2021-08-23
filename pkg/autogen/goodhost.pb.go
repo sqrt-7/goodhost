@@ -20,19 +20,69 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type Item struct {
+type OrderStatus int32
+
+const (
+	OrderStatus_UNKNOWN     OrderStatus = 0
+	OrderStatus_CREATED     OrderStatus = 1
+	OrderStatus_IN_PROGRESS OrderStatus = 2
+	OrderStatus_CANCELLED   OrderStatus = 3
+	OrderStatus_COMPLETED   OrderStatus = 4
+)
+
+// Enum value maps for OrderStatus.
+var (
+	OrderStatus_name = map[int32]string{
+		0: "UNKNOWN",
+		1: "CREATED",
+		2: "IN_PROGRESS",
+		3: "CANCELLED",
+		4: "COMPLETED",
+	}
+	OrderStatus_value = map[string]int32{
+		"UNKNOWN":     0,
+		"CREATED":     1,
+		"IN_PROGRESS": 2,
+		"CANCELLED":   3,
+		"COMPLETED":   4,
+	}
+)
+
+func (x OrderStatus) Enum() *OrderStatus {
+	p := new(OrderStatus)
+	*p = x
+	return p
+}
+
+func (x OrderStatus) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (OrderStatus) Descriptor() protoreflect.EnumDescriptor {
+	return file_protobuf_goodhost_proto_enumTypes[0].Descriptor()
+}
+
+func (OrderStatus) Type() protoreflect.EnumType {
+	return &file_protobuf_goodhost_proto_enumTypes[0]
+}
+
+func (x OrderStatus) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use OrderStatus.Descriptor instead.
+func (OrderStatus) EnumDescriptor() ([]byte, []int) {
+	return file_protobuf_goodhost_proto_rawDescGZIP(), []int{0}
+}
+
+type Menu struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
-
-	Id            string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	DescriptionMd string `protobuf:"bytes,2,opt,name=description_md,json=descriptionMd,proto3" json:"description_md,omitempty"`
-	// Price to be set as <currency, value_in_cents>
-	Price map[string]uint32 `protobuf:"bytes,3,rep,name=price,proto3" json:"price,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"varint,2,opt,name=value,proto3"`
 }
 
-func (x *Item) Reset() {
-	*x = Item{}
+func (x *Menu) Reset() {
+	*x = Menu{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_protobuf_goodhost_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -40,13 +90,13 @@ func (x *Item) Reset() {
 	}
 }
 
-func (x *Item) String() string {
+func (x *Menu) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*Item) ProtoMessage() {}
+func (*Menu) ProtoMessage() {}
 
-func (x *Item) ProtoReflect() protoreflect.Message {
+func (x *Menu) ProtoReflect() protoreflect.Message {
 	mi := &file_protobuf_goodhost_proto_msgTypes[0]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -58,30 +108,316 @@ func (x *Item) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use Item.ProtoReflect.Descriptor instead.
-func (*Item) Descriptor() ([]byte, []int) {
+// Deprecated: Use Menu.ProtoReflect.Descriptor instead.
+func (*Menu) Descriptor() ([]byte, []int) {
 	return file_protobuf_goodhost_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *Item) GetId() string {
+type MenuCategory struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *MenuCategory) Reset() {
+	*x = MenuCategory{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_protobuf_goodhost_proto_msgTypes[1]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MenuCategory) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MenuCategory) ProtoMessage() {}
+
+func (x *MenuCategory) ProtoReflect() protoreflect.Message {
+	mi := &file_protobuf_goodhost_proto_msgTypes[1]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MenuCategory.ProtoReflect.Descriptor instead.
+func (*MenuCategory) Descriptor() ([]byte, []int) {
+	return file_protobuf_goodhost_proto_rawDescGZIP(), []int{1}
+}
+
+type MenuItem struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Id            string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	DescriptionMd string `protobuf:"bytes,2,opt,name=description_md,json=descriptionMd,proto3" json:"description_md,omitempty"`
+	// Price to be set as <currency, value_in_cents>
+	Price map[string]uint32 `protobuf:"bytes,3,rep,name=price,proto3" json:"price,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"varint,2,opt,name=value,proto3"`
+	Tags  []*MenuItemTag    `protobuf:"bytes,4,rep,name=tags,proto3" json:"tags,omitempty"`
+}
+
+func (x *MenuItem) Reset() {
+	*x = MenuItem{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_protobuf_goodhost_proto_msgTypes[2]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MenuItem) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MenuItem) ProtoMessage() {}
+
+func (x *MenuItem) ProtoReflect() protoreflect.Message {
+	mi := &file_protobuf_goodhost_proto_msgTypes[2]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MenuItem.ProtoReflect.Descriptor instead.
+func (*MenuItem) Descriptor() ([]byte, []int) {
+	return file_protobuf_goodhost_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *MenuItem) GetId() string {
 	if x != nil {
 		return x.Id
 	}
 	return ""
 }
 
-func (x *Item) GetDescriptionMd() string {
+func (x *MenuItem) GetDescriptionMd() string {
 	if x != nil {
 		return x.DescriptionMd
 	}
 	return ""
 }
 
-func (x *Item) GetPrice() map[string]uint32 {
+func (x *MenuItem) GetPrice() map[string]uint32 {
 	if x != nil {
 		return x.Price
 	}
 	return nil
+}
+
+func (x *MenuItem) GetTags() []*MenuItemTag {
+	if x != nil {
+		return x.Tags
+	}
+	return nil
+}
+
+type MenuItemTag struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	TagName string `protobuf:"bytes,1,opt,name=tag_name,json=tagName,proto3" json:"tag_name,omitempty"`
+}
+
+func (x *MenuItemTag) Reset() {
+	*x = MenuItemTag{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_protobuf_goodhost_proto_msgTypes[3]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MenuItemTag) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MenuItemTag) ProtoMessage() {}
+
+func (x *MenuItemTag) ProtoReflect() protoreflect.Message {
+	mi := &file_protobuf_goodhost_proto_msgTypes[3]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MenuItemTag.ProtoReflect.Descriptor instead.
+func (*MenuItemTag) Descriptor() ([]byte, []int) {
+	return file_protobuf_goodhost_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *MenuItemTag) GetTagName() string {
+	if x != nil {
+		return x.TagName
+	}
+	return ""
+}
+
+type MenuItemOrder struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	MenuItemId string   `protobuf:"bytes,1,opt,name=menu_item_id,json=menuItemId,proto3" json:"menu_item_id,omitempty"`
+	Quantity   uint32   `protobuf:"varint,2,opt,name=quantity,proto3" json:"quantity,omitempty"`
+	Allergies  []string `protobuf:"bytes,3,rep,name=allergies,proto3" json:"allergies,omitempty"`
+	Notes      string   `protobuf:"bytes,4,opt,name=notes,proto3" json:"notes,omitempty"`
+}
+
+func (x *MenuItemOrder) Reset() {
+	*x = MenuItemOrder{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_protobuf_goodhost_proto_msgTypes[4]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MenuItemOrder) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MenuItemOrder) ProtoMessage() {}
+
+func (x *MenuItemOrder) ProtoReflect() protoreflect.Message {
+	mi := &file_protobuf_goodhost_proto_msgTypes[4]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MenuItemOrder.ProtoReflect.Descriptor instead.
+func (*MenuItemOrder) Descriptor() ([]byte, []int) {
+	return file_protobuf_goodhost_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *MenuItemOrder) GetMenuItemId() string {
+	if x != nil {
+		return x.MenuItemId
+	}
+	return ""
+}
+
+func (x *MenuItemOrder) GetQuantity() uint32 {
+	if x != nil {
+		return x.Quantity
+	}
+	return 0
+}
+
+func (x *MenuItemOrder) GetAllergies() []string {
+	if x != nil {
+		return x.Allergies
+	}
+	return nil
+}
+
+func (x *MenuItemOrder) GetNotes() string {
+	if x != nil {
+		return x.Notes
+	}
+	return ""
+}
+
+type Order struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Id           string           `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	StaffId      string           `protobuf:"bytes,2,opt,name=staff_id,json=staffId,proto3" json:"staff_id,omitempty"`
+	TableId      string           `protobuf:"bytes,3,opt,name=table_id,json=tableId,proto3" json:"table_id,omitempty"`
+	OrderedItems []*MenuItemOrder `protobuf:"bytes,4,rep,name=ordered_items,json=orderedItems,proto3" json:"ordered_items,omitempty"`
+	Status       OrderStatus      `protobuf:"varint,5,opt,name=status,proto3,enum=goodhost.OrderStatus" json:"status,omitempty"`
+}
+
+func (x *Order) Reset() {
+	*x = Order{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_protobuf_goodhost_proto_msgTypes[5]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Order) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Order) ProtoMessage() {}
+
+func (x *Order) ProtoReflect() protoreflect.Message {
+	mi := &file_protobuf_goodhost_proto_msgTypes[5]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Order.ProtoReflect.Descriptor instead.
+func (*Order) Descriptor() ([]byte, []int) {
+	return file_protobuf_goodhost_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *Order) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *Order) GetStaffId() string {
+	if x != nil {
+		return x.StaffId
+	}
+	return ""
+}
+
+func (x *Order) GetTableId() string {
+	if x != nil {
+		return x.TableId
+	}
+	return ""
+}
+
+func (x *Order) GetOrderedItems() []*MenuItemOrder {
+	if x != nil {
+		return x.OrderedItems
+	}
+	return nil
+}
+
+func (x *Order) GetStatus() OrderStatus {
+	if x != nil {
+		return x.Status
+	}
+	return OrderStatus_UNKNOWN
 }
 
 var File_protobuf_goodhost_proto protoreflect.FileDescriptor
@@ -89,20 +425,53 @@ var File_protobuf_goodhost_proto protoreflect.FileDescriptor
 var file_protobuf_goodhost_proto_rawDesc = []byte{
 	0x0a, 0x17, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2f, 0x67, 0x6f, 0x6f, 0x64, 0x68,
 	0x6f, 0x73, 0x74, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x08, 0x67, 0x6f, 0x6f, 0x64, 0x68,
-	0x6f, 0x73, 0x74, 0x22, 0xa8, 0x01, 0x0a, 0x04, 0x49, 0x74, 0x65, 0x6d, 0x12, 0x0e, 0x0a, 0x02,
-	0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x12, 0x25, 0x0a, 0x0e,
-	0x64, 0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x6d, 0x64, 0x18, 0x02,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x0d, 0x64, 0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f,
-	0x6e, 0x4d, 0x64, 0x12, 0x2f, 0x0a, 0x05, 0x70, 0x72, 0x69, 0x63, 0x65, 0x18, 0x03, 0x20, 0x03,
-	0x28, 0x0b, 0x32, 0x19, 0x2e, 0x67, 0x6f, 0x6f, 0x64, 0x68, 0x6f, 0x73, 0x74, 0x2e, 0x49, 0x74,
+	0x6f, 0x73, 0x74, 0x22, 0x06, 0x0a, 0x04, 0x4d, 0x65, 0x6e, 0x75, 0x22, 0x0e, 0x0a, 0x0c, 0x4d,
+	0x65, 0x6e, 0x75, 0x43, 0x61, 0x74, 0x65, 0x67, 0x6f, 0x72, 0x79, 0x22, 0xdb, 0x01, 0x0a, 0x08,
+	0x4d, 0x65, 0x6e, 0x75, 0x49, 0x74, 0x65, 0x6d, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x12, 0x25, 0x0a, 0x0e, 0x64, 0x65, 0x73, 0x63,
+	0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x6d, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x0d, 0x64, 0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x4d, 0x64, 0x12,
+	0x33, 0x0a, 0x05, 0x70, 0x72, 0x69, 0x63, 0x65, 0x18, 0x03, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x1d,
+	0x2e, 0x67, 0x6f, 0x6f, 0x64, 0x68, 0x6f, 0x73, 0x74, 0x2e, 0x4d, 0x65, 0x6e, 0x75, 0x49, 0x74,
 	0x65, 0x6d, 0x2e, 0x50, 0x72, 0x69, 0x63, 0x65, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x52, 0x05, 0x70,
-	0x72, 0x69, 0x63, 0x65, 0x1a, 0x38, 0x0a, 0x0a, 0x50, 0x72, 0x69, 0x63, 0x65, 0x45, 0x6e, 0x74,
-	0x72, 0x79, 0x12, 0x10, 0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
-	0x03, 0x6b, 0x65, 0x79, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20,
-	0x01, 0x28, 0x0d, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x3a, 0x02, 0x38, 0x01, 0x42, 0x28,
-	0x5a, 0x26, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x73, 0x71, 0x72,
-	0x74, 0x2d, 0x37, 0x2f, 0x67, 0x6f, 0x6f, 0x64, 0x68, 0x6f, 0x73, 0x74, 0x2f, 0x70, 0x6b, 0x67,
-	0x2f, 0x61, 0x75, 0x74, 0x6f, 0x67, 0x65, 0x6e, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x72, 0x69, 0x63, 0x65, 0x12, 0x29, 0x0a, 0x04, 0x74, 0x61, 0x67, 0x73, 0x18, 0x04, 0x20, 0x03,
+	0x28, 0x0b, 0x32, 0x15, 0x2e, 0x67, 0x6f, 0x6f, 0x64, 0x68, 0x6f, 0x73, 0x74, 0x2e, 0x4d, 0x65,
+	0x6e, 0x75, 0x49, 0x74, 0x65, 0x6d, 0x54, 0x61, 0x67, 0x52, 0x04, 0x74, 0x61, 0x67, 0x73, 0x1a,
+	0x38, 0x0a, 0x0a, 0x50, 0x72, 0x69, 0x63, 0x65, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x12, 0x10, 0x0a,
+	0x03, 0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x12,
+	0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0d, 0x52, 0x05,
+	0x76, 0x61, 0x6c, 0x75, 0x65, 0x3a, 0x02, 0x38, 0x01, 0x22, 0x28, 0x0a, 0x0b, 0x4d, 0x65, 0x6e,
+	0x75, 0x49, 0x74, 0x65, 0x6d, 0x54, 0x61, 0x67, 0x12, 0x19, 0x0a, 0x08, 0x74, 0x61, 0x67, 0x5f,
+	0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x74, 0x61, 0x67, 0x4e,
+	0x61, 0x6d, 0x65, 0x22, 0x81, 0x01, 0x0a, 0x0d, 0x4d, 0x65, 0x6e, 0x75, 0x49, 0x74, 0x65, 0x6d,
+	0x4f, 0x72, 0x64, 0x65, 0x72, 0x12, 0x20, 0x0a, 0x0c, 0x6d, 0x65, 0x6e, 0x75, 0x5f, 0x69, 0x74,
+	0x65, 0x6d, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x6d, 0x65, 0x6e,
+	0x75, 0x49, 0x74, 0x65, 0x6d, 0x49, 0x64, 0x12, 0x1a, 0x0a, 0x08, 0x71, 0x75, 0x61, 0x6e, 0x74,
+	0x69, 0x74, 0x79, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0d, 0x52, 0x08, 0x71, 0x75, 0x61, 0x6e, 0x74,
+	0x69, 0x74, 0x79, 0x12, 0x1c, 0x0a, 0x09, 0x61, 0x6c, 0x6c, 0x65, 0x72, 0x67, 0x69, 0x65, 0x73,
+	0x18, 0x03, 0x20, 0x03, 0x28, 0x09, 0x52, 0x09, 0x61, 0x6c, 0x6c, 0x65, 0x72, 0x67, 0x69, 0x65,
+	0x73, 0x12, 0x14, 0x0a, 0x05, 0x6e, 0x6f, 0x74, 0x65, 0x73, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x05, 0x6e, 0x6f, 0x74, 0x65, 0x73, 0x22, 0xba, 0x01, 0x0a, 0x05, 0x4f, 0x72, 0x64, 0x65,
+	0x72, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69,
+	0x64, 0x12, 0x19, 0x0a, 0x08, 0x73, 0x74, 0x61, 0x66, 0x66, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x07, 0x73, 0x74, 0x61, 0x66, 0x66, 0x49, 0x64, 0x12, 0x19, 0x0a, 0x08,
+	0x74, 0x61, 0x62, 0x6c, 0x65, 0x5f, 0x69, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07,
+	0x74, 0x61, 0x62, 0x6c, 0x65, 0x49, 0x64, 0x12, 0x3c, 0x0a, 0x0d, 0x6f, 0x72, 0x64, 0x65, 0x72,
+	0x65, 0x64, 0x5f, 0x69, 0x74, 0x65, 0x6d, 0x73, 0x18, 0x04, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x17,
+	0x2e, 0x67, 0x6f, 0x6f, 0x64, 0x68, 0x6f, 0x73, 0x74, 0x2e, 0x4d, 0x65, 0x6e, 0x75, 0x49, 0x74,
+	0x65, 0x6d, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x52, 0x0c, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x65, 0x64,
+	0x49, 0x74, 0x65, 0x6d, 0x73, 0x12, 0x2d, 0x0a, 0x06, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x18,
+	0x05, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x15, 0x2e, 0x67, 0x6f, 0x6f, 0x64, 0x68, 0x6f, 0x73, 0x74,
+	0x2e, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x06, 0x73, 0x74,
+	0x61, 0x74, 0x75, 0x73, 0x2a, 0x56, 0x0a, 0x0b, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x53, 0x74, 0x61,
+	0x74, 0x75, 0x73, 0x12, 0x0b, 0x0a, 0x07, 0x55, 0x4e, 0x4b, 0x4e, 0x4f, 0x57, 0x4e, 0x10, 0x00,
+	0x12, 0x0b, 0x0a, 0x07, 0x43, 0x52, 0x45, 0x41, 0x54, 0x45, 0x44, 0x10, 0x01, 0x12, 0x0f, 0x0a,
+	0x0b, 0x49, 0x4e, 0x5f, 0x50, 0x52, 0x4f, 0x47, 0x52, 0x45, 0x53, 0x53, 0x10, 0x02, 0x12, 0x0d,
+	0x0a, 0x09, 0x43, 0x41, 0x4e, 0x43, 0x45, 0x4c, 0x4c, 0x45, 0x44, 0x10, 0x03, 0x12, 0x0d, 0x0a,
+	0x09, 0x43, 0x4f, 0x4d, 0x50, 0x4c, 0x45, 0x54, 0x45, 0x44, 0x10, 0x04, 0x42, 0x28, 0x5a, 0x26,
+	0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x73, 0x71, 0x72, 0x74, 0x2d,
+	0x37, 0x2f, 0x67, 0x6f, 0x6f, 0x64, 0x68, 0x6f, 0x73, 0x74, 0x2f, 0x70, 0x6b, 0x67, 0x2f, 0x61,
+	0x75, 0x74, 0x6f, 0x67, 0x65, 0x6e, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -117,18 +486,28 @@ func file_protobuf_goodhost_proto_rawDescGZIP() []byte {
 	return file_protobuf_goodhost_proto_rawDescData
 }
 
-var file_protobuf_goodhost_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_protobuf_goodhost_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
+var file_protobuf_goodhost_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
 var file_protobuf_goodhost_proto_goTypes = []interface{}{
-	(*Item)(nil), // 0: goodhost.Item
-	nil,          // 1: goodhost.Item.PriceEntry
+	(OrderStatus)(0),      // 0: goodhost.OrderStatus
+	(*Menu)(nil),          // 1: goodhost.Menu
+	(*MenuCategory)(nil),  // 2: goodhost.MenuCategory
+	(*MenuItem)(nil),      // 3: goodhost.MenuItem
+	(*MenuItemTag)(nil),   // 4: goodhost.MenuItemTag
+	(*MenuItemOrder)(nil), // 5: goodhost.MenuItemOrder
+	(*Order)(nil),         // 6: goodhost.Order
+	nil,                   // 7: goodhost.MenuItem.PriceEntry
 }
 var file_protobuf_goodhost_proto_depIdxs = []int32{
-	1, // 0: goodhost.Item.price:type_name -> goodhost.Item.PriceEntry
-	1, // [1:1] is the sub-list for method output_type
-	1, // [1:1] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	7, // 0: goodhost.MenuItem.price:type_name -> goodhost.MenuItem.PriceEntry
+	4, // 1: goodhost.MenuItem.tags:type_name -> goodhost.MenuItemTag
+	5, // 2: goodhost.Order.ordered_items:type_name -> goodhost.MenuItemOrder
+	0, // 3: goodhost.Order.status:type_name -> goodhost.OrderStatus
+	4, // [4:4] is the sub-list for method output_type
+	4, // [4:4] is the sub-list for method input_type
+	4, // [4:4] is the sub-list for extension type_name
+	4, // [4:4] is the sub-list for extension extendee
+	0, // [0:4] is the sub-list for field type_name
 }
 
 func init() { file_protobuf_goodhost_proto_init() }
@@ -138,7 +517,67 @@ func file_protobuf_goodhost_proto_init() {
 	}
 	if !protoimpl.UnsafeEnabled {
 		file_protobuf_goodhost_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Item); i {
+			switch v := v.(*Menu); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_protobuf_goodhost_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*MenuCategory); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_protobuf_goodhost_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*MenuItem); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_protobuf_goodhost_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*MenuItemTag); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_protobuf_goodhost_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*MenuItemOrder); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_protobuf_goodhost_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Order); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -155,13 +594,14 @@ func file_protobuf_goodhost_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_protobuf_goodhost_proto_rawDesc,
-			NumEnums:      0,
-			NumMessages:   2,
+			NumEnums:      1,
+			NumMessages:   7,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
 		GoTypes:           file_protobuf_goodhost_proto_goTypes,
 		DependencyIndexes: file_protobuf_goodhost_proto_depIdxs,
+		EnumInfos:         file_protobuf_goodhost_proto_enumTypes,
 		MessageInfos:      file_protobuf_goodhost_proto_msgTypes,
 	}.Build()
 	File_protobuf_goodhost_proto = out.File
