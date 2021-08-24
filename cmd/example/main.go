@@ -59,24 +59,29 @@ func main() {
 		AcceptedCurrencyNames: []string{currencyPounds.Name, currencyEuro.Name},
 		Schedule: []*autogen.MenuSchedule{
 			{
-				ActiveDay:   autogen.DayOfWeek_MONDAY,
-				ActiveHours: []uint32{6, 7, 8, 9},
+				ActiveDay: autogen.DayOfWeek_MONDAY,
+				StartTime: 600,
+				EndTime:   930,
 			},
 			{
-				ActiveDay:   autogen.DayOfWeek_TUESDAY,
-				ActiveHours: []uint32{6, 7, 8, 9},
+				ActiveDay: autogen.DayOfWeek_TUESDAY,
+				StartTime: 600,
+				EndTime:   930,
 			},
 			{
-				ActiveDay:   autogen.DayOfWeek_WEDNESDAY,
-				ActiveHours: []uint32{6, 7, 8, 9},
+				ActiveDay: autogen.DayOfWeek_WEDNESDAY,
+				StartTime: 600,
+				EndTime:   930,
 			},
 			{
-				ActiveDay:   autogen.DayOfWeek_THURSDAY,
-				ActiveHours: []uint32{6, 7, 8, 9},
+				ActiveDay: autogen.DayOfWeek_THURSDAY,
+				StartTime: 600,
+				EndTime:   930,
 			},
 			{
-				ActiveDay:   autogen.DayOfWeek_FRIDAY,
-				ActiveHours: []uint32{6, 7, 8, 9, 10, 11},
+				ActiveDay: autogen.DayOfWeek_FRIDAY,
+				StartTime: 700,
+				EndTime:   1045,
 			},
 		},
 		Categories: []*autogen.MenuCategory{

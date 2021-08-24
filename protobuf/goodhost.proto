@@ -57,7 +57,8 @@ message Menu {
 
 message MenuSchedule {
     DayOfWeek active_day = 1;
-    repeated uint32 active_hours = 2;
+    uint32 start_time = 2;
+    uint32 end_time = 3;
 }
 
 message MenuCategory {
